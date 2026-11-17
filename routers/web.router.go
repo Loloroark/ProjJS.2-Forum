@@ -14,7 +14,9 @@ func RegisterWebRoutes(r *mux.Router, tc *controllers.WebFilsControllers, ac *co
 	)
 
 	r.Use(middleware.WebAuthMiddleware)
-
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/forum", http.StatusFound)
+	}).Methods("GET")
 	// Auth
 	r.HandleFunc("/inscription", ac.RegisterPage).Methods("GET")
 	r.HandleFunc("/inscription", ac.RegisterAction).Methods("POST")
